@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surprise for You</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #111;
+      color: #fff;
+      overflow: hidden;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    h1 {
+      font-size: 3.5rem;
+      animation: fadeInDown 2s ease-out;
+    }
+    p {
+      font-size: 1.5rem;
+      margin-top: 20px;
+      animation: fadeInUp 3s ease-out;
+    }
+    .heart {
+      font-size: 5rem;
+      color: red;
+      animation: beat 1s infinite;
+    }
+    .reveal {
+      animation: revealAnimation 3s ease-out;
+    }
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+    @keyframes revealAnimation {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes pulseToMusic {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+    button {
+      background-color: #ff0077;
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      margin-top: 30px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #ff5588;
+    }
+    .hidden-message {
+      display: none;
+      font-size: 2rem;
+      margin-top: 20px;
+    }
+    .audio-control {
+      margin-top: 20px;
+    }
+    
+    /* Love Floating Animation */
+    .love {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      transform: rotate(45deg);
+      animation: fly 5s linear infinite;
+    }
+    .love::before, .love::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      border-radius: 50%;
+    }
+    .love::before {
+      top: -10px;
+      left: 0;
+    }
+    .love::after {
+      left: 10px;
+      top: 0;
+    }
+    
+    @keyframes fly {
+      0% {
+        transform: translateY(100vh) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="reveal">Surprise!</h1>
+    <p>You are the most amazing person in my life ❤️</p>
+    <div class="heart" id="heart">❤️</div>
+    <button onclick="playSurprise()">Klik ini Bibil</button>
+    <div class="hidden-message" id="message">I love you forever! 💖</div>
+    
+    <!-- Audio Player -->
+    <audio id="surprise-music" class="audio-control" src="surprise-music.mp3" preload="auto"></audio>
+  </div>
+
+  <script>
+    function playSurprise() {
+      var message = document.getElementById("message");
+      var music = document.getElementById("surprise-music");
+      var heart = document.getElementById("heart");
+
+      // Tampilkan pesan tersembunyi
+      message.style.display = "block";
+      message.classList.add("reveal");
+
+      // Putar musik
+      music.play();
+
+      // Animasi detak hati sinkron dengan musik
+      heart.style.animation = "pulseToMusic 1.5s infinite";
+
+      // Mulai animasi love terbang
+      createLoves();
+    }
+
+    function createLoves() {
+      setInterval(() => {
+        const love = document.createElement('div');
+        love.classList.add('love');
+        love.style.left = Math.random() * 100 + 'vw';
+        love.style.animationDuration = Math.random() * 3 + 2 + 's';
+        document.body.appendChild(love);
+
+        // Hapus love setelah selesai animasi
+        setTimeout(() => {
+          love.remove();
+        }, 5000);
+      }, 300);
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
